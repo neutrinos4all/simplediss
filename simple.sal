@@ -1,0 +1,34 @@
+simple : CONTEXT =
+BEGIN
+
+	%declare global variables
+
+	userState: 			TYPE = {safe,unsafe};
+	attackerState: 		TYPE = {safe,unsafe};
+
+	systemModel: MODULE = 
+	BEGIN
+		INPUT
+
+		OUTPUT
+
+		LOCAL
+
+		INITIALIZATION
+
+		TRANSITION
+	END;
+
+	userModel: MODULE = 
+	BEGIN
+
+	END;
+
+	attackerModel: MODULE = 
+	BEGIN
+
+	END;
+
+	model: MODULE = systemModel || userModel || attackerModel;
+
+END
