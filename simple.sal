@@ -1,20 +1,39 @@
 simple : CONTEXT =
 BEGIN
 
-	%declare global variables
-
-	userState: 			TYPE = {safe,unsafe};
-	attackerState: 		TYPE = {safe,unsafe};
+	userState:		TYPE = {secure,vulnerable};
+	attackerState: 	TYPE = {deterred,exploitable};
 
 	systemModel: MODULE = 
 	BEGIN
+
+		% an input is an observed variable in the module
+		% a local is a controlled variable in the module
+		% an output is a controlled variable in the module
+
+		% things that we can control:
+		% browserType {mobile,desktop};
+		% length of malicious url provided {short,long};
+		% does the user need to put in sensitive material? boolean {yes,no};
+
+		% things that are automatically determined by what we control:
+		% length of url bar {compact,full}, determined by the browser being used;
+
+		% things that we want to know about the system:
+		% is this a potentially insecure state? boolean {yes,no};
+
+
 		INPUT
 
+		
 		OUTPUT
 
+		
 		LOCAL
 
+
 		INITIALIZATION
+			
 
 		TRANSITION
 	END;
