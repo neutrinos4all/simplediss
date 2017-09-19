@@ -1,50 +1,92 @@
 simple : CONTEXT =
 BEGIN
 
-	userState:		TYPE = {secure,vulnerable};
-	attackerState: 	TYPE = {deterred,exploitable};
+	userState:		TYPE = {protected,unprotected};
+	attackerState: 	TYPE = {deterred,undeterred};
+	browser:		TYPE = {mobile,tablet,desktop};
+	omnibar:		TYPE = {compact,full};
+	url:			TYPE = {short,long};
+	urlChars:		TYPE = [0..maxUrlChars]
+
+	maxUrlChars:	INTEGER = 84;
 
 	systemModel: MODULE = 
 	BEGIN
 
-		% an input is an observed variable in the module
-		% a local is a controlled variable in the module
-		% an output is a controlled variable in the module
+		% an input is controlled by other things
 
-		% things that we can control:
-		% browserType {mobile,desktop};
-		% length of malicious url provided {short,long};
-		% does the user need to put in sensitive material? boolean {yes,no};
+		% a local is controlled by me, and local can't be seen by other modules
+		% an output is controlled by me
 
-		% things that are automatically determined by what we control:
-		% length of url bar {compact,full}, determined by the browser being used;
-
-		% things that we want to know about the system:
-		% is this a potentially insecure state? boolean {yes,no};
+		% mobile browser displays 40chars
+		% desktop browser displays 84chars
 
 
-		INPUT
+		INPUT omnibarLength		: omnibar
+		INPUT urlLength			: url
 
-		
-		OUTPUT
+		OUTPUT browserType		: browser
+		OUTPUT sensitiveInfo	: BOOLEAN
+		OUTPUT addressChars 	: urlChars
 
-		
-		LOCAL
+		DEFINITION % this can be derived from the system state
+			omnibarLength = 
+				IF browser = mobile THEN
+					compact 
+				ELSIF browser = tablet THEN
+					full
+				ELSIF browser = desktop THEN
+					full
+				ELSE compact
+				ENDIF;
 
+			urlLength =
+				IF urlChars <= 40 THEN
+					short
+				ELSIF urlChars > 41 AND <= 84 THEN
+					long
+				ELSE
+					long
+				ENDIF;
 
-		INITIALIZATION
-			
+		INITIALIZATION 
+			browserType 	= mobile;
+			sensitiveInfo 	= FALSE;
+			addressChars 	= 32;
 
-		TRANSITION
+		TRANSITION % this can not be derived from the system state
 	END;
 
 	userModel: MODULE = 
 	BEGIN
 
+		INPUT 
+
+		OUTPUT user 	: userState
+
+		DEFINITION
+
+		INITIALIZATION
+
+		TRANSITION
+
 	END;
 
 	attackerModel: MODULE = 
 	BEGIN
+
+		% these need completed
+		INPUT browserType
+		INPUT sensitiveInfo
+
+		OUTPUT attacker 	: attackerState
+		OUTPUT hostileIntent % this needs completed
+
+		DEFINITION
+
+		INITIALIZATIOn
+
+		TRANSITION
 
 	END;
 
