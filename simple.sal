@@ -51,7 +51,6 @@ BEGIN
 
 		INITIALIZATION 
 			browserType 	= mobile;
-			sensitiveInfo 	= FALSE;
 			addressChars 	= 32;
 
 		TRANSITION % this can not be derived from the system state
@@ -67,6 +66,7 @@ BEGIN
 		DEFINITION
 
 		INITIALIZATION
+			sensitiveInfo 	= TRUE;
 
 		TRANSITION
 
